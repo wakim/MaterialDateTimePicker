@@ -55,4 +55,6 @@ public interface DatePickerController {
     void tryVibrate();
 
     TimeZone getTimeZone();
+
+    void onMonthYearFocused(int month, int year);
 }

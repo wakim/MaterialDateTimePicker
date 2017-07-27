@@ -80,6 +80,14 @@ public abstract class DayPickerView extends RecyclerView implements OnDateChange
     private DatePickerController mController;
     private LinearLayoutManager linearLayoutManager;
 
+    private GravitySnapHelper.SnapListener mSnapListener = new GravitySnapHelper.SnapListener() {
+        @Override
+        public void onSnap(int position) {
+            MonthView visible = getMostVisibleMonth();
+            mController.onMonthYearFocused(visible.getMonth(), visible.getYear());
+        }
+    };
+
     public DayPickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -123,7 +131,7 @@ public abstract class DayPickerView extends RecyclerView implements OnDateChange
     protected void setUpRecyclerView() {
         setVerticalScrollBarEnabled(false);
         setFadingEdgeLength(0);
-        GravitySnapHelper helper = new GravitySnapHelper(Gravity.TOP);
+        GravitySnapHelper helper = new GravitySnapHelper(Gravity.TOP, mSnapListener);
         helper.attachToRecyclerView(this);
     }
 

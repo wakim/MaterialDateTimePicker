@@ -86,6 +86,9 @@ public class DefaultDateRangeLimiterTest {
         public TimeZone getTimeZone() {
             return TimeZone.getDefault();
         }
+
+        @Override
+        public void onMonthYearFocused(int month, int year) {}
     };
 
     // getters

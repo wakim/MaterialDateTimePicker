@@ -154,6 +154,8 @@ public class DatePickerDialog extends DialogFragment implements
     private String mYearPickerDescription;
     private String mSelectYear;
 
+    OnDateFocusListener mOnDateFocusListener;
+
     /**
      * The callback used to indicate the user is done filling in the date.
      */
@@ -959,6 +961,10 @@ public class DatePickerDialog extends DialogFragment implements
         updatePickers();
         setCurrentView(MONTH_AND_DAY_VIEW);
         updateDisplay(true);
+
+        if (mOnDateFocusListener != null) {
+            mOnDateFocusListener.onDateFocused(mCalendar);
+        }
     }
 
     @Override
@@ -1039,5 +1045,24 @@ public class DatePickerDialog extends DialogFragment implements
             mCallBack.onDateSet(DatePickerDialog.this, mCalendar.get(Calendar.YEAR),
                     mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
         }
+    }
+
+    Calendar prototype = Calendar.getInstance();
+
+    @Override
+    public void onMonthYearFocused(int month, int year) {
+        prototype.setTimeInMillis(mCalendar.getTimeInMillis());
+
+        prototype.set(Calendar.MONTH, month);
+        prototype.set(Calendar.YEAR, year);
+
+        if (mOnDateFocusListener != null) {
+            mOnDateFocusListener.onDateFocused(prototype);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void setOnDateFocusListener(OnDateFocusListener onDateFocusListener) {
+        mOnDateFocusListener = onDateFocusListener;
     }
 }

@@ -90,6 +90,9 @@ public class DefaultDateRangeLimiterPropertyTest {
         public TimeZone getTimeZone() {
             return TimeZone.getDefault();
         }
+
+        @Override
+        public void onMonthYearFocused(int month, int year) {}
     };
 
     private static Calendar[] datesToCalendars(Date[] dates) {
