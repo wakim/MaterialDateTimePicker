@@ -1065,4 +1065,26 @@ public class DatePickerDialog extends DialogFragment implements
     public void setOnDateFocusListener(OnDateFocusListener onDateFocusListener) {
         mOnDateFocusListener = onDateFocusListener;
     }
+
+    @SuppressWarnings("unused")
+    public int getCurrentMonthPosition() {
+        if (mDayPickerView == null) {
+            return 0;
+        }
+
+        return mDayPickerView.getMostVisiblePosition();
+    }
+
+    @SuppressWarnings("unused")
+    public void setCurrentMonthPosition(int position) {
+        if (mDayPickerView == null) {
+            return;
+        }
+
+        if (mDayPickerView.getAdapter().getItemCount() <= position) {
+            return;
+        }
+
+        mDayPickerView.scrollToPosition(position);
+    }
 }
